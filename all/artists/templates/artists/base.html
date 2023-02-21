@@ -1,0 +1,29 @@
+
+
+{% block content %}
+
+<h1>Create new Artist</h1>
+
+
+    {% if not artists %}
+    <p>there is no artists</p>
+    {% endif %}
+
+    {% for artist in artists  %}
+        <p> artist name :{{artist.name}}</p>
+        <p>  social_link:{{artist.social_links}}</p>
+        <p>Albums</p>
+        _____________
+        {% for album in artist.albums.all %}  
+        <p>Album Name:{{ album.name }}</p>
+        <p>creation Date : {{album.creationDateTime}}</p>
+        <p>cost : {{album.cost}}</p>
+        ___________________________________
+        {% endfor %}    
+    
+
+    
+    {% endfor %}
+
+
+{% endblock %}

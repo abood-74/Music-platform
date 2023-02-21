@@ -1,0 +1,18 @@
+
+
+{% block content %}
+
+<h1>Create new Artist</h1>
+
+<form action="" method="post" novalidate>
+
+    {% if error %}
+    <p>you entered invalid data</p>
+    {% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
