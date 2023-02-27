@@ -1,0 +1,23 @@
+{% block content %}      
+
+
+<!--Login--> 
+<div class="container py-5">
+  <h1>Login</h1>
+    {% if invalid_data %}
+    <h1>you entered invalid data </h1>
+    {% endif %}
+    
+    {% if error %}
+    <h1>User not found</h1>
+    {% endif %}
+  
+    <form method="POST">
+    {% csrf_token %}
+    {{ login_form }}
+    <button class="btn btn-primary" type="submit">Login</button>
+  </form>
+  <p class="text-center">Don't have an account? <a href="{% url 'artists:register' %}">Create an account</a>.</p>
+</div>
+
+{% endblock %}

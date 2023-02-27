@@ -1,0 +1,16 @@
+{% block content %} 
+
+<div class="container py-5">
+	<h1>Register</h1>
+	{% if error %}
+	<h1>please enter valid data</h1>
+	{% endif %}
+	<form method="POST">
+		{% csrf_token %}
+		{{registeration_form}}                    
+		<button type="submit">Register</button>
+	</form>
+	<p class="text-center">If you already have an account, <a href="{% url 'artists:login' %}">login</a> instead.</p>
+</div>
+
+{% endblock %}
