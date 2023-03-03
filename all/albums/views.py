@@ -5,34 +5,28 @@ from django.views import View
 from django.contrib.auth import login
 from albums.forms import AlbumForm
 from django.contrib import messages
+from .serializers import *
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import authentication, permissions
+from django.contrib.auth import authenticate, login, logout
 
-class CreateAlbum(View):
-    
+class CreateAlbum(LoginRequiredMixin,APIView):
+    login_url = 'artists:login'
     def get(self,request):
-        form = AlbumForm()
-        if not request.user.is_authenticated:
-            return redirect("artists:login")
-
-        return render(request,
-                'albums/create_album.html',
-                {'form': form})
+        albums = Album.objects.all()
+        serializer = AlbumSerializer(albums, many=True)
+        return Response(serializer.data)
     
     def post(self,request):
-        
-        form = AlbumForm(request.POST)
-        if form.is_valid():
-            
-            form.save()
-            
-            return redirect("albums:create")
-        
-        else:
-            form = AlbumForm()
-            
-            return render(request,
-                'artists/create.html',
-                {'form': form, 'error':'error'})
-
+        serializer = AlbumSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
             
         

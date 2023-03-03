@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'albums.apps.AlbumsConfig',
     'artists.apps.ArtistsConfig',
-    'imagekit'
+    'imagekit',
+    'rest_framework'
     
 ]
 
@@ -102,6 +103,16 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
 
 
 # Internationalization

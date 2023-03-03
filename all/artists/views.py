@@ -6,39 +6,32 @@ from django.contrib.auth import login,authenticate,logout
 from artists.forms import ArtistForm,UserRegister
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+from rest_framework import status, generics
+from rest_framework.views import  APIView
+from .serializers import *
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class Main (View):
-    def get(self,request):
+class Main (APIView):
+    def get(self, request):
         artists = Artist.objects.all()
-        return render(request,'artists/base.html',{'artists':artists})
-
-class CreateArtist(View):
+        serializer = ArtistSerializer(artists, many=True)
+        return Response(serializer.data)
+class CreateArtist(LoginRequiredMixin,APIView):
+    login_url = 'artists:login'
     
-    def get(self,request):
-        form = ArtistForm()
-        if not request.user.is_authenticated:
-            return redirect("artists:login")
-
-        return render(request,
-                'artists/create.html',
-                {'form': form})
+    def get(self, request, format=None):
+        artists = Artist.objects.all()
+        serializer = ArtistSerializer(artists, many=True)
+        return Response(serializer.data)
     
-    def post(self,request):
-        
-        form = ArtistForm(request.POST)
-        if form.is_valid():
-            
-            form.save()
-            
-            return redirect("artists:main")
-        
-        else:
-            form = ArtistForm()
-            
-            return render(request,
-                'artists/create.html',
-                {'form': form, 'error':'error'})
+    def post(self, request, format=None):
+        serializer = ArtistSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
             
 
 

@@ -3,8 +3,6 @@ from django.utils import timezone
 from artists.models import *
 from datetime import datetime
 from  model_utils.models import TimeStampedModel
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
 
 
 class Album(TimeStampedModel):
@@ -32,4 +30,8 @@ class Album(TimeStampedModel):
     
     def __str__(self) -> str:
         return self.name
+    
+    
+    
+
     
