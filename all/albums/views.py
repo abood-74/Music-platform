@@ -10,11 +10,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import authentication, permissions
-from django.contrib.auth import authenticate, login, logout
 
-class CreateAlbum(LoginRequiredMixin,APIView):
-    login_url = 'artists:login'
+
+
+class CreateAlbum(APIView):
+    
     def get(self,request):
         albums = Album.objects.all()
         serializer = AlbumSerializer(albums, many=True)
