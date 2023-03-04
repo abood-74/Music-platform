@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from .models import Artist
 from django.views import View
 from django.contrib.auth import login,authenticate,logout
-from artists.forms import ArtistForm,UserRegister
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from rest_framework.response import Response

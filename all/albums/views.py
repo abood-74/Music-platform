@@ -2,7 +2,6 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 from .models import Album
 from django.views import View
-from django.contrib.auth import login
 from albums.forms import AlbumForm
 from django.contrib import messages
 from .serializers import *
